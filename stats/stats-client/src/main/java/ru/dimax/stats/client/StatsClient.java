@@ -46,7 +46,7 @@ public class StatsClient {
       return makeAndSendRequest(HttpMethod.POST, "/hit", null, hit);
     }
 
-    public <T> ResponseEntity<Object>  getStat(String start, String end, List<String> uris, Boolean unique) {
+    public <T> ResponseEntity<Object> getStat(String start, String end, List<String> uris, Boolean unique) {
         if(uris == null) {
             Map<String, Object> parameters = Map.of(
                     "start", start,
@@ -66,17 +66,17 @@ public class StatsClient {
 
     private <T> ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, @Nullable Map<String, Object> parameters, @Nullable T body) {
         HttpEntity<T> requestEntity = new HttpEntity<>(body, defaultHeaders());
-        ResponseEntity<Object> StatServiceResponse;
+        ResponseEntity<Object> statServiceResponse;
         try {
             if (parameters != null) {
-                StatServiceResponse = restTemplate.exchange(path, method, requestEntity, Object.class, parameters);
+                statServiceResponse = restTemplate.exchange(path, method, requestEntity, Object.class, parameters);
             } else {
-                StatServiceResponse = restTemplate.exchange(path, method, requestEntity, Object.class);
+                statServiceResponse = restTemplate.exchange(path, method, requestEntity, Object.class);
             }
         } catch (HttpStatusCodeException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsByteArray());
         }
-        return prepareGatewayResponse(StatServiceResponse);
+        return prepareGatewayResponse(statServiceResponse);
     }
 
     private HttpHeaders defaultHeaders() {
