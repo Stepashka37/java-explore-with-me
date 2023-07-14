@@ -1,35 +1,29 @@
-package ru.dimax.stats.server.model;
+package ru.dimax.stats.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.jackson.Jacksonized;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
 @Builder
-@Entity(name = "endpoint_hit")
-@Table(name = "endpoint_hits")
+@Jacksonized
 public class EndpointHit {
 
-    @Id
-    @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
-    @Column(name = "id",
-            updatable = false)
+
     private Long id;
 
-    @Column(name = "app",
-            nullable = false)
+
     private String app;
-    @Column(name = "uri",
-            nullable = false)
+
     private String uri;
-    @Column(name = "ip",
-            nullable = false)
+
     private String ip;
-    @Column(name = "timestamp",
-            nullable = false,
-            columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
 
     public EndpointHit() {

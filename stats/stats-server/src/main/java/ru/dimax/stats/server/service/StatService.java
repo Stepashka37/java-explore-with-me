@@ -1,6 +1,7 @@
 package ru.dimax.stats.server.service;
 
 
+import ru.dimax.stats.dto.EndpointHit;
 import ru.dimax.stats.dto.EndpointHitDto;
 import ru.dimax.stats.dto.ViewStats;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 public interface StatService {
 
-    EndpointHitDto saveHit(EndpointHitDto endpointHitDto);
+    EndpointHit saveHit(EndpointHit endpointHit);
 
-    List<ViewStats> getStats(LocalDateTime start, LocalDateTime end, String[] uris, Boolean unique);
+    List<ViewStats> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique);
 }

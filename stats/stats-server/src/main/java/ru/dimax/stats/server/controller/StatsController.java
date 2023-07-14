@@ -1,20 +1,24 @@
 package ru.dimax.stats.server.controller;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import ru.dimax.stats.dto.EndpointHit;
 import ru.dimax.stats.dto.EndpointHitDto;
 import ru.dimax.stats.dto.ViewStats;
 import ru.dimax.stats.server.service.StatService;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @Slf4j
+@RequestMapping("/")
 public class StatsController {
 
     private final StatService statsService;
@@ -24,20 +28,30 @@ public class StatsController {
         this.statsService = statsService;
     }
 
-    @PostMapping("/hit")
-    public EndpointHitDto saveHit(EndpointHitDto dto) {
-        return statsService.saveHit(dto);
+
+
+    @GetMapping(value = "/stats")
+    public ResponseEntity<List<ViewStats>> getStats(@RequestParam @NonNull String start,
+                                                   @RequestParam @NonNull String end,
+                                                   @RequestParam(required = false) List<String> uris,
+                                                   @RequestParam(required = false, defaultValue = "false") boolean unique) {
+        LocalDateTime startDT;
+        LocalDateTime endDT;
+        try {
+           startDT = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+           endDT = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+        if(uris==null) uris = new ArrayList<>();
+        List<ViewStats> result = statsService.getStats(startDT, endDT, uris, unique);
+        return ResponseEntity.ok(result) ;
     }
 
-    @GetMapping("/stats")
-    public List<ViewStats> getStats(@RequestParam(required = true) String start,
-                                    @RequestParam(required = true) String end,
-                                    @RequestParam(required = false) String[] uris,
-                                    @RequestParam(required = false) String unique) {
-        LocalDateTime startDT = LocalDateTime.parse(start);
-        LocalDateTime endDT = LocalDateTime.parse(end);
-        Boolean uniqueBool = Boolean.parseBoolean(unique);
-        return statsService.getStats(startDT, endDT, uris, uniqueBool);
+    @PostMapping(value = "/hit")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public EndpointHit saveHit(@RequestBody EndpointHit dto) {
+        return statsService.saveHit(dto);
     }
 
 }

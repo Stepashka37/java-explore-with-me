@@ -1,25 +1,22 @@
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.transaction.annotation.Transactional;
-import ru.dimax.stats.dto.ViewStats;
-import ru.dimax.stats.server.model.EndpointHit;
-import ru.dimax.stats.server.repository.StatRepository;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import ru.dimax.stats.dto.EndpointHit;
+import ru.dimax.stats.server.repository.dao.EndpointRepository;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest(
-        properties = {
-                "spring.jpa.properties.javax.persistence.validation.mode=none"
-        }
-)
-@Transactional
+@SpringBootTest(classes = {EndpointRepository.class})
+@AutoConfigureTestDatabase
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class StatRepositoryTest {
-    @Autowired
-    private StatRepository underTest;
+
+
+    private final EndpointRepository underTest;
 
     @Test
     void itShouldBeInitialized() {
@@ -48,10 +45,11 @@ public class StatRepositoryTest {
                 .timestamp(LocalDateTime.now())
                 .build();
 
-        underTest.save(hit1);
-        underTest.save(hit2);
 
+        underTest.saveHit(hit2);
 
+        System.out.println( underTest.saveHit(hit1));
+        System.out.println( underTest.saveHit(hit2));
     }
 
 }
