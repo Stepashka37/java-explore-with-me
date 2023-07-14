@@ -83,7 +83,7 @@ public class EndpointRepository implements StatRepository {
                     "ORDER BY count DESC";
             stats = jdbcTemplate.query(sql, (rs, rowNum) -> makeViewStat(rs),
                     start, end, start, end);
-        };
+        }
         return stats;
     }
 
