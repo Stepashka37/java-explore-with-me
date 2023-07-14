@@ -2,7 +2,6 @@ package ru.dimax.stats.server.service;
 
 
 import ru.dimax.stats.dto.EndpointHit;
-import ru.dimax.stats.dto.EndpointHitDto;
 import ru.dimax.stats.dto.ViewStats;
 
 import java.time.LocalDateTime;

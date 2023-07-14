@@ -1,7 +1,7 @@
 package ru.dimax.stats.server.repository;
 
-import ru.dimax.stats.dto.ViewStats;
 import ru.dimax.stats.dto.EndpointHit;
+import ru.dimax.stats.dto.ViewStats;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,16 +1,13 @@
 package ru.dimax.stats.server.service;
 
 import org.springframework.stereotype.Service;
-import ru.dimax.stats.dto.EndpointHitDto;
-import ru.dimax.stats.dto.ViewStats;
 import ru.dimax.stats.dto.EndpointHit;
+import ru.dimax.stats.dto.ViewStats;
 import ru.dimax.stats.server.repository.dao.EndpointRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import static ru.dimax.stats.dto.mapper.EndpointHitMapper.*;
 
 @Service
 public class StatServiceImpl implements StatService {

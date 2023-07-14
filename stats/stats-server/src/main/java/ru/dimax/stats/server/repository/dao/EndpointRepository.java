@@ -5,11 +5,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.dimax.stats.dto.ViewStats;
 import ru.dimax.stats.dto.EndpointHit;
+import ru.dimax.stats.dto.ViewStats;
 import ru.dimax.stats.server.repository.StatRepository;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +81,7 @@ public class EndpointRepository implements StatRepository {
                     "WHERE timestamp BETWEEN ? AND ? " +
                     "GROUP BY app, uri " +
                     "ORDER BY count DESC";
-            stats =  jdbcTemplate.query(sql, (rs, rowNum) -> makeViewStat(rs),
+            stats = jdbcTemplate.query(sql, (rs, rowNum) -> makeViewStat(rs),
                     start, end, start, end);
         };
         return stats;

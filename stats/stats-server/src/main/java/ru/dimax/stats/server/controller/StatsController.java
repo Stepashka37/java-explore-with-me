@@ -2,12 +2,10 @@ package ru.dimax.stats.server.controller;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.dimax.stats.dto.EndpointHit;
-import ru.dimax.stats.dto.EndpointHitDto;
 import ru.dimax.stats.dto.ViewStats;
 import ru.dimax.stats.server.service.StatService;
 
@@ -43,9 +41,9 @@ public class StatsController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
-        if(uris==null) uris = new ArrayList<>();
+        if (uris == null) uris = new ArrayList<>();
         List<ViewStats> result = statsService.getStats(startDT, endDT, uris, unique);
-        return ResponseEntity.ok(result) ;
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping(value = "/hit")

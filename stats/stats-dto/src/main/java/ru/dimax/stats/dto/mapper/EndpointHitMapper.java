@@ -1,8 +1,8 @@
 package ru.dimax.stats.dto.mapper;
 
+import ru.dimax.stats.dto.EndpointHit;
 import ru.dimax.stats.dto.EndpointHitDto;
 import ru.dimax.stats.dto.ViewStats;
-import ru.dimax.stats.dto.EndpointHit;
 
 public class EndpointHitMapper {
     public static EndpointHit dtoToModel(EndpointHitDto dto) {
