@@ -1,9 +1,11 @@
 package ru.dimax.stats.dto.mapper;
 
+import lombok.experimental.UtilityClass;
 import ru.dimax.stats.dto.EndpointHit;
 import ru.dimax.stats.dto.EndpointHitDto;
 import ru.dimax.stats.dto.ViewStats;
 
+@UtilityClass
 public class EndpointHitMapper {
     public static EndpointHit dtoToModel(EndpointHitDto dto) {
         return EndpointHit.builder()

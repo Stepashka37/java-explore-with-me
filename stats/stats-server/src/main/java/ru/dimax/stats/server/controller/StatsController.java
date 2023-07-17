@@ -32,7 +32,7 @@ public class StatsController {
     public ResponseEntity<List<ViewStats>> getStats(@RequestParam @NonNull String start,
                                                    @RequestParam @NonNull String end,
                                                    @RequestParam(required = false) List<String> uris,
-                                                   @RequestParam(required = false, defaultValue = "false") boolean unique) {
+                                                   @RequestParam(defaultValue = "false") boolean unique) {
         LocalDateTime startDT;
         LocalDateTime endDT;
         try {
