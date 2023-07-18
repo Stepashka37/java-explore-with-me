@@ -18,7 +18,7 @@ public class ErrorHandler {
 
     private final String dateTimePattern = "yyyy-MM-dd HH:mm:ss";
 
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler({UserNotFoundException.class, CategoryNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse notFoundException(final RuntimeException exception) {
         log.error("404: " + exception.getMessage());

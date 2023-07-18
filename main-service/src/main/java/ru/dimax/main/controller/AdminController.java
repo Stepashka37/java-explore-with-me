@@ -1,11 +1,13 @@
 package ru.dimax.main.controller;
 
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.dimax.main.model.dtos.CategoryDto;
+import ru.dimax.main.model.dtos.NewCategoryDto;
 import ru.dimax.main.model.dtos.NewUserRequest;
 import ru.dimax.main.model.dtos.UserDto;
+import ru.dimax.main.service.CategoryService;
 import ru.dimax.main.service.UserService;
 
 import javax.validation.Valid;
@@ -17,9 +19,11 @@ import java.util.List;
 public class AdminController {
 
     private final UserService userService;
+    private final CategoryService categoryService;
 
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, CategoryService categoryService) {
         this.userService = userService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/users")
@@ -50,4 +54,25 @@ public class AdminController {
         userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/categories")
+    public ResponseEntity<CategoryDto> createCategory(@RequestBody NewCategoryDto newCategoryDto) {
+        CategoryDto category = categoryService.createCategory(newCategoryDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(category);
+    }
+
+    @PatchMapping("/categories/{catId}")
+    public ResponseEntity<CategoryDto> updateCategory(@PathVariable Long catId, @RequestBody NewCategoryDto newCategoryDto) {
+        CategoryDto category  = categoryService.updateCategory(catId, newCategoryDto);
+        return ResponseEntity.status(HttpStatus.OK).body(category);
+    }
+
+    @DeleteMapping("/categories/{catId}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long catId) {
+        categoryService.deleteCategory(catId);
+        return ResponseEntity.noContent().build();
+    }
 }
+
+
+

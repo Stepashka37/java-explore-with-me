@@ -51,7 +51,6 @@ public class UserServiceImpl implements UserService {
             User saved = userRepository.saveAndFlush(user);
             return modelToDto(saved);
         } catch (ConstraintViolationException e) {
-            // Handle the exception or rethrow it if necessary
             throw new ConstraintViolationException(e.getMessage(), e.getSQLException(), e.getConstraintName());
         }
     }
