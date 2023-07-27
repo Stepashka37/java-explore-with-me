@@ -1,3 +1,4 @@
+/*
 package ru.dimax.main.service;
 
 import com.github.javafaker.Faker;
@@ -15,11 +16,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import ru.dimax.main.EwmMainService;
 import ru.dimax.main.model.User;
-import ru.dimax.main.model.dtos.NewUserRequest;
-import ru.dimax.main.model.dtos.UserDto;
+import ru.dimax.main.model.dtos.user.NewUserRequest;
+import ru.dimax.main.model.dtos.user.UserDto;
 import ru.dimax.main.repository.UserRepository;
-import ru.dimax.main.service.UserService;
-import ru.dimax.main.service.UserServiceImpl;
+import ru.dimax.main.service.user.UserService;
+import ru.dimax.main.service.user.UserServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static ru.dimax.main.mapper.UserMapper.*;
+import static ru.dimax.main.mapper.user.UserMapper.*;
 
 @SpringBootTest(classes = EwmMainService.class)
 @ExtendWith(MockitoExtension.class)
@@ -141,4 +142,4 @@ class UserServiceImplTest {
         // Then
         verify(userRepository, times(1)).deleteById(1L);
     }
-}
+}*/

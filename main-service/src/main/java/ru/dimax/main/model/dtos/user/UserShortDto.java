@@ -1,14 +1,11 @@
-package ru.dimax.main.model.dtos;
-
+package ru.dimax.main.model.dtos.user;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Builder
 @Data
-public class UserDto {
+public class UserShortDto {
     private Long id;
     private String name;
-    private String email;
-
 }

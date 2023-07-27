@@ -1,8 +1,7 @@
-package ru.dimax.main.service;
+package ru.dimax.main.service.user;
 
-import ru.dimax.main.model.User;
-import ru.dimax.main.model.dtos.NewUserRequest;
-import ru.dimax.main.model.dtos.UserDto;
+import ru.dimax.main.model.dtos.user.NewUserRequest;
+import ru.dimax.main.model.dtos.user.UserDto;
 
 import java.util.List;
 

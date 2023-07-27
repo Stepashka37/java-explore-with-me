@@ -1,24 +1,20 @@
-package ru.dimax.main.service;
+package ru.dimax.main.service.category;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.dimax.main.exception.CategoryNotFoundException;
-import ru.dimax.main.exception.UserNotFoundException;
-import ru.dimax.main.mapper.CategoryMapper;
+import ru.dimax.main.exception.EntityNotFoundException;
 import ru.dimax.main.model.Category;
-import ru.dimax.main.model.User;
-import ru.dimax.main.model.dtos.CategoryDto;
-import ru.dimax.main.model.dtos.NewCategoryDto;
+import ru.dimax.main.model.dtos.category.CategoryDto;
+import ru.dimax.main.model.dtos.category.NewCategoryDto;
 import ru.dimax.main.repository.CategoryRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ru.dimax.main.mapper.CategoryMapper.*;
+import static ru.dimax.main.mapper.category.CategoryMapper.*;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -45,10 +41,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public CategoryDto updateCategory(Long id, NewCategoryDto newCategoryDto) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new CategoryNotFoundException(String.format("Category with id {} not found", id)));
-       categoryRepository.updateCategoryName(id, newCategoryDto.getName());
-        Category categoryUPD = categoryRepository.findById(id)
-                .orElseThrow(() -> new CategoryNotFoundException(String.format("Category with id {} not found", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Category with id {} not found", id)));
+        category.setName(newCategoryDto.getName());
+       Category categoryUPD = categoryRepository.saveAndFlush(category);
+
         return modelToDto(categoryUPD);
     }
 
@@ -65,14 +61,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto getCategory(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new CategoryNotFoundException(String.format("Category with id {} not found", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Category with id {} not found", id)));
         return modelToDto(category);
     }
 
     @Override
     public void deleteCategory(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new CategoryNotFoundException(String.format("Category with id {} not found", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Category with id {} not found", id)));
         categoryRepository.deleteById(id);
     }
 }

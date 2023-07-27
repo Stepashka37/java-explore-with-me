@@ -25,6 +25,14 @@ public class StatServiceImpl implements StatService {
 
     @Override
     public List<ViewStats> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
+
+        for (String s : uris) {
+            if (s.startsWith("[") && s.endsWith("]")) {
+                uris.remove(s);
+                uris.add(s.substring(1, s.length()-1));
+            }
+        }
+
         List<ViewStats> viewStats = new ArrayList<>();
         if (uris == null || uris.isEmpty()) {
         viewStats = endpointRepository.getAllViewStats(start, end, unique);

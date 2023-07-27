@@ -1,32 +1,33 @@
 package ru.dimax.main.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "categories")
 @Entity
 @Builder
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", length = 20, unique = true)
+    @Column(name = "name", length = 50, unique = true)
     private String name;
 
-    public Category() {
-    }
+    @OneToMany
+    @JoinColumn(name = "events_id")
+    private List<Event> events;
 
-    public Category(Long id, String name) {
+
+    public Category(Long id) {
         this.id = id;
-        this.name = name;
     }
-
 
 }

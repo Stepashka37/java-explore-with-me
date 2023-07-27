@@ -1,22 +1,20 @@
-package ru.dimax.main.service;
+package ru.dimax.main.service.user;
 
 import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.dimax.main.exception.UserNotFoundException;
-import ru.dimax.main.mapper.UserMapper;
+import ru.dimax.main.exception.EntityNotFoundException;
 import ru.dimax.main.model.User;
-import ru.dimax.main.model.dtos.NewUserRequest;
-import ru.dimax.main.model.dtos.UserDto;
+import ru.dimax.main.model.dtos.user.NewUserRequest;
+import ru.dimax.main.model.dtos.user.UserDto;
 import ru.dimax.main.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ru.dimax.main.mapper.UserMapper.*;
+import static ru.dimax.main.mapper.user.UserMapper.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -58,7 +56,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with id {} not found", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("User with id {} not found", id)));
         userRepository.deleteById(id);
     }
 }

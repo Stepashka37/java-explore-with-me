@@ -1,9 +1,10 @@
-package ru.dimax.main.mapper;
+package ru.dimax.main.mapper.user;
 
 import lombok.experimental.UtilityClass;
 import ru.dimax.main.model.User;
-import ru.dimax.main.model.dtos.NewUserRequest;
-import ru.dimax.main.model.dtos.UserDto;
+import ru.dimax.main.model.dtos.user.NewUserRequest;
+import ru.dimax.main.model.dtos.user.UserDto;
+import ru.dimax.main.model.dtos.user.UserShortDto;
 
 @UtilityClass
 public class UserMapper {
@@ -28,6 +29,13 @@ public class UserMapper {
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
+                .build();
+    }
+
+    public UserShortDto modelToShortDto(User user) {
+        return UserShortDto.builder()
+                .id(user.getId())
+                .name(user.getName())
                 .build();
     }
 

@@ -1,8 +1,7 @@
-package ru.dimax.main.service;
+package ru.dimax.main.service.category;
 
-import ru.dimax.main.model.Category;
-import ru.dimax.main.model.dtos.CategoryDto;
-import ru.dimax.main.model.dtos.NewCategoryDto;
+import ru.dimax.main.model.dtos.category.CategoryDto;
+import ru.dimax.main.model.dtos.category.NewCategoryDto;
 
 import java.util.List;
 

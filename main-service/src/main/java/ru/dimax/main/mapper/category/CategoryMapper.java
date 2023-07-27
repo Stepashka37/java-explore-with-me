@@ -1,9 +1,9 @@
-package ru.dimax.main.mapper;
+package ru.dimax.main.mapper.category;
 
 import lombok.experimental.UtilityClass;
 import ru.dimax.main.model.Category;
-import ru.dimax.main.model.dtos.CategoryDto;
-import ru.dimax.main.model.dtos.NewCategoryDto;
+import ru.dimax.main.model.dtos.category.CategoryDto;
+import ru.dimax.main.model.dtos.category.NewCategoryDto;
 
 @UtilityClass
 public class CategoryMapper {
