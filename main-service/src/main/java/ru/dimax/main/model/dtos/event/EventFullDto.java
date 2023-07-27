@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import ru.dimax.main.model.Location;
 import ru.dimax.main.model.State;
-import ru.dimax.main.model.dtos.user.UserShortDto;
 import ru.dimax.main.model.dtos.category.CategoryDto;
+import ru.dimax.main.model.dtos.user.UserShortDto;
 
 import java.time.LocalDateTime;
 

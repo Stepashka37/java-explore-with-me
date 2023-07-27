@@ -3,7 +3,6 @@ package ru.dimax.main.model.dtos.request;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.dimax.main.model.dtos.request.ParticipationRequestDto;
 
 import java.util.List;
 

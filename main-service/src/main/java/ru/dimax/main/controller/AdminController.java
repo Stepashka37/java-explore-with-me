@@ -43,7 +43,7 @@ public class AdminController {
     public ResponseEntity<List<UserDto>> getAllUsers(@RequestParam(required = false) List<Long> ids,
                                                      @RequestParam(defaultValue = "0") String from,
                                                      @RequestParam(defaultValue = "10") String size) {
-        if (ids == null) ids = new ArrayList<Long>();
+        if (ids == null) ids = new ArrayList<>();
         Integer fromInt;
         Integer sizeInt;
         try {
@@ -94,9 +94,6 @@ public class AdminController {
                                                            @RequestParam(required = false) String rangeEnd,
                                                            @RequestParam(defaultValue = "0") String from,
                                                            @RequestParam(defaultValue = "10") String size) {
-        /*if (users == null) users = new ArrayList<Long>();
-        if (states == null) states = new ArrayList<String>();
-        if (categories == null) categories = new ArrayList<Long>();*/
 
         Integer fromInt;
         Integer sizeInt;

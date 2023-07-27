@@ -4,7 +4,6 @@ package ru.dimax.main.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Table(name = "requests")

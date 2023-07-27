@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static ru.dimax.main.mapper.compilation.CompilationMapper.*;
 
+
 @Service
 @Slf4j
 public class CompilationServiceImpl implements CompilationService {
@@ -59,7 +60,6 @@ public class CompilationServiceImpl implements CompilationService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Compilation {} not found", compId)));
 
         compilationRepository.deleteById(compId);
-
     }
 
     @Override

@@ -3,16 +3,11 @@ package ru.dimax.main.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ValidationException;
-import javax.ws.rs.Produces;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -42,15 +37,30 @@ public class ErrorHandler {
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern(dateTimePattern)));
     }
 
-    @ExceptionHandler({MethodArgumentNotValidException.class, EventValidationException.class, TimeValidationException.class})
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse argumentValidationException(final RuntimeException exception) {
+    public ErrorResponse methodArgumentNoValidExc(final MethodArgumentNotValidException exception) {
         log.error("400: " + exception.getMessage());
         return new ErrorResponse(HttpStatus.BAD_REQUEST.name(),
                 "Incorrectly made request.",
-                exception.getMessage(),
+                String.format("Field: %s. Error: %s. Value: %s",
+                        exception.getBindingResult().getFieldError().getField(),
+                        exception.getBindingResult().getFieldError().getDefaultMessage(),
+                        exception.getBindingResult().getFieldError().getRejectedValue()),
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern(dateTimePattern)));
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse entityValidationExceptionHandler(final EntityValidationException e) {
+        log.error("400: " + e.getMessage());
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.name(),
+                "Incorrectly made request.",
+                e.getMessage(),
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern(dateTimePattern)));
+    }
+
+
 
     @ExceptionHandler({ConditionException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)

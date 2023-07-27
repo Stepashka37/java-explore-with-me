@@ -3,8 +3,8 @@ package ru.dimax.main.mapper.compilation;
 import lombok.experimental.UtilityClass;
 import ru.dimax.main.model.Compilation;
 import ru.dimax.main.model.dtos.compilation.CompilationDto;
-import ru.dimax.main.model.dtos.event.EventShortDto;
 import ru.dimax.main.model.dtos.compilation.NewCompilationDto;
+import ru.dimax.main.model.dtos.event.EventShortDto;
 
 import java.util.ArrayList;
 import java.util.List;

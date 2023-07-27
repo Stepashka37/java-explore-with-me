@@ -1,12 +1,16 @@
 package ru.dimax.main.model.dtos.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.dimax.main.model.Location;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Builder

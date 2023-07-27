@@ -3,7 +3,10 @@ package ru.dimax.main.service.request;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.dimax.main.exception.*;
+import ru.dimax.main.exception.ConditionException;
+import ru.dimax.main.exception.ConflictException;
+import ru.dimax.main.exception.EntityNotFoundException;
+import ru.dimax.main.exception.RequestApplicationException;
 import ru.dimax.main.model.Event;
 import ru.dimax.main.model.Request;
 import ru.dimax.main.model.State;
@@ -19,8 +22,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-
 
 import static ru.dimax.main.mapper.request.RequestMapper.*;
 

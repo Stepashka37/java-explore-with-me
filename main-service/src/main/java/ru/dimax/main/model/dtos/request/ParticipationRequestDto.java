@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import ru.dimax.main.model.State;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Data

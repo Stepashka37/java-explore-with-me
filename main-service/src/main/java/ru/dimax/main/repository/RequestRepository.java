@@ -17,7 +17,4 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     Request findByRequesterIdAndEventId(Long requesterId, Long eventId);
 
-    @Modifying
-    @Query("UPDATE Request r SET r.status = :newStatus WHERE r.id = :requestId")
-    void updateRequestStatus(@Param("requestId") Long requestId, @Param("newStatus") State newStatus);
 }

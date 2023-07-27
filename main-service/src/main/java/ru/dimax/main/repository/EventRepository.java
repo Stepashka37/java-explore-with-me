@@ -6,9 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.dimax.main.model.Event;
-import ru.dimax.main.model.Sort;
 import ru.dimax.main.model.State;
-
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -65,8 +63,4 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                                                @Param("available") Boolean available,
                                                Pageable pageable);
 
-
-    @Modifying
-    @Query("UPDATE Event e SET e.views = :views WHERE e.id = :eventId")
-    void updateEventViews(@Param("eventId") Long eventId, @Param("views") Integer views);
 }
