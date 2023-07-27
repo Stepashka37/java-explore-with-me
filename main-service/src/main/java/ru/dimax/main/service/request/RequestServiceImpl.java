@@ -147,7 +147,6 @@ public class RequestServiceImpl implements RequestService {
                 .filter(r -> r.getStatus().equals(State.CONFIRMED))
                 .count();
 
-
         if (confirmedRequest == event.getParticipantLimit()) {
             throw new ConflictException("Participant limit exceeded");
         }
@@ -198,57 +197,15 @@ public class RequestServiceImpl implements RequestService {
                 .collect(Collectors.toList());
         return new ConfirmedAndRejectedRequests(confirmedDto, rejectedDto);
 
-
-        /*Long participantLimit = event.getParticipantLimit();
-        List<Request> confirmedRequests = new ArrayList<>();
-        List<Request> rejectedRequests = new ArrayList<>();
-        if (request.getStatus().equals(State.CONFIRMED)) {
-            for(Request requestToConfirm : requests) {
-                if (!requestToConfirm.getStatus().equals(State.PENDING)) {
-                    throw new ConditionException("Status can only be changed for PENDING requests");
-                }
-                if (confirmedRequest == participantLimit) {
-                    rejectedRequests.addAll(requests.subList(requests.indexOf(requestToConfirm), requests.size()));
-                    saveConfirmedAndRejected(confirmedRequests, rejectedRequests);
-                    throw new ConditionException("The participant limit has been reached");
-                }
-                if (confirmedRequest < participantLimit) {
-                    requestToConfirm.setStatus(State.CONFIRMED);
-                    confirmedRequest++;
-                    confirmedRequests.add(requestToConfirm);
-                }
-            }
-        } else if (request.getStatus().equals(State.REJECTED)) {
-            for (Request requestToReject : requests) {
-                if (!requestToReject.getStatus().equals(State.PENDING)) {
-                    throw new ConditionException("Status can only be changed for PENDING requests");
-                }
-                requestToReject.setStatus(State.REJECTED);
-                rejectedRequests.add(requestToReject);
-
-            }
-        }
-
-        List<ParticipationRequestDto> confirmedDto = confirmedRequests.stream()
-                .map(x -> modelToDto(x))
-        .collect(Collectors.toList());
-
-        List<ParticipationRequestDto> rejectedDto = rejectedRequests.stream()
-                .map(x -> modelToDto(x))
-                .collect(Collectors.toList());
-        return List.of(confirmedDto, rejectedDto);*/
     }
 
     private List<List<Request>> saveConfirmedAndRejected(List<Request> confirmedRequests, List<Request> rejectedRequests) {
         requestRepository.deleteAllById(confirmedRequests.stream().map(x -> x.getId()).collect(Collectors.toList()));
         List<Request> confirmed = requestRepository.saveAll(confirmedRequests);
 
-
         requestRepository.deleteAllById(rejectedRequests.stream().map(x -> x.getId()).collect(Collectors.toList()));
         rejectedRequests.stream().forEach(r -> r.setStatus(State.REJECTED));
         List<Request> rejected = requestRepository.saveAll(rejectedRequests);
         return List.of(confirmed, rejected);
     }
-
-
 }

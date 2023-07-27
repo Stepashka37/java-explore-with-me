@@ -90,7 +90,6 @@ public class CompilationServiceImpl implements CompilationService {
             compilation  = compilationRepository.findAllByPinned(pinned, pageable);
         }
 
-
         return compilation.stream()
                 .map(x -> modelToDto(x))
                 .collect(Collectors.toList());

@@ -33,10 +33,7 @@ public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
-
-
     private  StatsClient statsClient = new StatsClient();
-
 
     public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
@@ -161,7 +158,6 @@ public class EventServiceImpl implements EventService {
             throw new EntityValidationException("End time cannot be earlier than start time");
         }
 
-
         statsClient.hit(EndpointHit.builder()
                 .ip(request.getRemoteAddr())
                 .uri(request.getRequestURI())
@@ -175,8 +171,6 @@ public class EventServiceImpl implements EventService {
         } else {
             events = eventRepository.findEventsByFiltersSortByEventDate(text, categoriesIds, paid, rangeStart, rangeEnd, onlyAvailable, pageable);
         }
-
-
 
         return events.stream()
                 .map(x -> eventToShortDto(x))
@@ -195,14 +189,11 @@ public class EventServiceImpl implements EventService {
                     .collect(Collectors.toList());
         }
 
-
-
         List<Event> events = eventRepository.searchEvents(userIds, validStates, categoriesIds, rangeStart, rangeEnd, pageable);
 
         return events.stream()
                 .map(x -> eventToFullDto(x))
                 .collect(Collectors.toList());
-
     }
 
     @Override
@@ -245,7 +236,6 @@ public class EventServiceImpl implements EventService {
                 true);
 
         String bodyToString = objectResponseEntity.getBody().toString();
-        System.out.println(bodyToString);
         String regex = "hits=(\\d+)";
 
         Pattern pattern = Pattern.compile(regex);
@@ -255,7 +245,6 @@ public class EventServiceImpl implements EventService {
         if (matcher.find()) {
             String hitsValue = matcher.group(1);
             views = Integer.parseInt(hitsValue);
-            System.out.println("views: " + views);
         }
         return views;
     }
