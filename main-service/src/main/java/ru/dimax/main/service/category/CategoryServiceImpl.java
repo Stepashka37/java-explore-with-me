@@ -15,8 +15,8 @@ import ru.dimax.main.repository.CategoryRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ru.dimax.main.mapper.category.CategoryMapper.modelToDto;
-import static ru.dimax.main.mapper.category.CategoryMapper.newCategoryToCategory;
+import static ru.dimax.main.mapper.category.CategoryMapper.*;
+
 
 @Service
 @Slf4j

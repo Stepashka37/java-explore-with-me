@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ru.dimax.main.mapper.request.RequestMapper.modelToDto;
+import static ru.dimax.main.mapper.request.RequestMapper.*;
 
 @Service
 @Slf4j

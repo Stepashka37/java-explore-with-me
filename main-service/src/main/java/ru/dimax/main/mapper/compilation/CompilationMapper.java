@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ru.dimax.main.mapper.event.EventMapper.eventToShortDto;
+import static ru.dimax.main.mapper.event.EventMapper.*;
 
 @UtilityClass
 public class CompilationMapper {
