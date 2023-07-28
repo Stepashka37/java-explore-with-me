@@ -49,7 +49,7 @@ public class CompilationServiceImpl implements CompilationService {
         compilationToSave.setEvents(events);
 
         Compilation compilationSaved = compilationRepository.save(compilationToSave);
-
+        log.info("Created compilation with id: %s", compilationSaved.getId());
         return modelToDto(compilationSaved);
     }
 
@@ -58,7 +58,7 @@ public class CompilationServiceImpl implements CompilationService {
 
         Compilation compilation = compilationRepository.findById(compId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Compilation {} not found", compId)));
-
+        log.info("Deleted compilation with id: %s", compId);
         compilationRepository.deleteById(compId);
     }
 
@@ -73,8 +73,8 @@ public class CompilationServiceImpl implements CompilationService {
             List<Event> events = eventRepository.findAllById(request.getEvents());
             compilation.setEvents(events);
         }
-
         Compilation compilationUPD = compilationRepository.save(compilation);
+        log.info("Updated compilation with id: %s", compilationUPD.getId());
         return modelToDto(compilationUPD);
     }
 
@@ -89,7 +89,7 @@ public class CompilationServiceImpl implements CompilationService {
         if (pinned != null) {
             compilation  = compilationRepository.findAllByPinned(pinned, pageable);
         }
-
+        log.info("Got compilations");
         return compilation.stream()
                 .map(x -> modelToDto(x))
                 .collect(Collectors.toList());
@@ -99,7 +99,7 @@ public class CompilationServiceImpl implements CompilationService {
     public CompilationDto getCompilationById(Long compId) {
         Compilation compilation = compilationRepository.findById(compId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Compilation {} not found", compId)));
-
+        log.info("Got compilation with id: %s", compId);
         return modelToDto(compilation);
     }
 }

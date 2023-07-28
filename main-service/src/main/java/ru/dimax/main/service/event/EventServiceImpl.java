@@ -1,5 +1,6 @@
 package ru.dimax.main.service.event;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 import static ru.dimax.main.mapper.event.EventMapper.*;
 
 @Service
+@Slf4j
 public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
@@ -49,6 +51,7 @@ public class EventServiceImpl implements EventService {
         User initiator = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException(String.format("User %s not found", userId)));
         event.setInitiator(initiator);
         Event eventCreated = eventRepository.save(event);
+        log.info("Created event with id: %s", event.getId());
         return eventToFullDto(eventCreated);
     }
 
@@ -60,7 +63,7 @@ public class EventServiceImpl implements EventService {
         Pageable pageable = PageRequest.of(page, size);
         List<Event> events = new ArrayList<>();
         events = eventRepository.findAllByInitiatorId(userId, pageable);
-
+        log.info("Got events added by user with id:", userId);
         return events.stream()
                 .map(x -> eventToShortDto(x))
                 .collect(Collectors.toList());
@@ -76,6 +79,7 @@ public class EventServiceImpl implements EventService {
         if (event == null) {
             throw new EntityNotFoundException(String.format("Event %s not found", eventId));
         }
+        log.info("Got event with id: %s added by user with id: %s", eventId, userId);
 
         return eventToFullDto(event);
     }
@@ -108,6 +112,7 @@ public class EventServiceImpl implements EventService {
             }
 
             Event eventUPD = eventRepository.save(event);
+            log.info("Updated event with id: %s added by user with id: %s", eventId, userId);
             return eventToFullDto(eventUPD);
         }
         throw new AlreadyPublishedException("Published event cannot be changed.");
@@ -135,7 +140,7 @@ public class EventServiceImpl implements EventService {
         }
 
         Event eventUPD = eventRepository.saveAndFlush(event);
-
+        log.info("Got published event with id: %s", eventId);
         return eventToFullDto(eventUPD);
     }
 
@@ -171,7 +176,7 @@ public class EventServiceImpl implements EventService {
         } else {
             events = eventRepository.findEventsByFiltersSortByEventDate(text, categoriesIds, paid, rangeStart, rangeEnd, onlyAvailable, pageable);
         }
-
+        log.info("Got published events using filters");
         return events.stream()
                 .map(x -> eventToShortDto(x))
                 .collect(Collectors.toList());
@@ -190,7 +195,7 @@ public class EventServiceImpl implements EventService {
         }
 
         List<Event> events = eventRepository.searchEvents(userIds, validStates, categoriesIds, rangeStart, rangeEnd, pageable);
-
+        log.info("Found events using filters");
         return events.stream()
                 .map(x -> eventToFullDto(x))
                 .collect(Collectors.toList());
@@ -224,6 +229,7 @@ public class EventServiceImpl implements EventService {
         EventUpdateMapper.INSTANCE.updateEventFromDtoByAdmin(request, event);
 
         Event eventUPD = eventRepository.save(event);
+        log.info("Updated event with id: %s by admin", eventId);
         return eventToFullDto(eventUPD);
     }
 

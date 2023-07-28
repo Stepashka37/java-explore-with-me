@@ -3,6 +3,7 @@ package ru.dimax.main.mapper.event;
 import lombok.experimental.UtilityClass;
 import ru.dimax.main.model.Category;
 import ru.dimax.main.model.Event;
+import ru.dimax.main.model.Request;
 import ru.dimax.main.model.State;
 import ru.dimax.main.model.dtos.event.*;
 
@@ -40,7 +41,7 @@ public class EventMapper {
                 .category(modelToDto(event.getCategory()))
                 .confirmedRequests(event.getRequests()
                         .stream()
-                        .filter(x -> x.getStatus().equals(State.CONFIRMED))
+                        .filter(x -> x.getStatus().equals(Request.RequestState.CONFIRMED))
                         .count())
                 .createdOn(event.getCreated())
                 .description(event.getDescription())

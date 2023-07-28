@@ -1,5 +1,6 @@
 package ru.dimax.main.service.user;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import static ru.dimax.main.mapper.user.UserMapper.*;
 
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -36,6 +38,7 @@ public class UserServiceImpl implements UserService {
         } else {
             users = userRepository.findAllByIdIn(ids, pageable);
         }
+        log.info("Got users list");
         return users.stream()
                 .map(x -> modelToDto(x))
                 .collect(Collectors.toList());
@@ -47,6 +50,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             User saved = userRepository.saveAndFlush(user);
+            log.info("Created user with id: %s ", saved.getId());
             return modelToDto(saved);
         } catch (ConstraintViolationException e) {
             throw new ConstraintViolationException(e.getMessage(), e.getSQLException(), e.getConstraintName());
@@ -57,6 +61,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("User with id {} not found", id)));
+        log.info("Deleted user with id: %s ", id);
         userRepository.deleteById(id);
     }
 }

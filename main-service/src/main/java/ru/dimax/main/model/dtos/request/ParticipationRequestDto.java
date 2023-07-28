@@ -22,5 +22,5 @@ public class ParticipationRequestDto {
 
     private Long requester;
 
-    private State status;
+    private String status;
 }

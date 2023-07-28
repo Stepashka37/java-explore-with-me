@@ -33,7 +33,14 @@ public class Request {
     private Event event;
 
     @Column(name = "status")
-    private State status;
+    @Enumerated(EnumType.STRING)
+    private RequestState status;
 
+    public enum RequestState {
+        PENDING,
+        CANCELED,
+        REJECTED,
+        CONFIRMED
+    }
 
 }

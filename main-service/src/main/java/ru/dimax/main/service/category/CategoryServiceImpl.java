@@ -1,5 +1,6 @@
 package ru.dimax.main.service.category;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 import static ru.dimax.main.mapper.category.CategoryMapper.*;
 
 @Service
+@Slf4j
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
@@ -31,6 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         try {
             Category saved = categoryRepository.saveAndFlush(category);
+            log.info("Created category with id: %s", category.getId());
             return modelToDto(saved);
         } catch (ConstraintViolationException e) {
             throw new ConstraintViolationException(e.getMessage(), e.getSQLException(), e.getConstraintName());
@@ -43,8 +46,8 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Category with id {} not found", id)));
         category.setName(newCategoryDto.getName());
-       Category categoryUPD = categoryRepository.saveAndFlush(category);
-
+        Category categoryUPD = categoryRepository.saveAndFlush(category);
+        log.info("Updated category with id: %s", category.getId());
         return modelToDto(categoryUPD);
     }
 
@@ -53,6 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
         int page = from / size;
         Pageable pageable = PageRequest.of(page, size);
         List<Category> categories = categoryRepository.findAll(pageable).getContent();
+        log.info("Get categories");
         return categories.stream()
                 .map(x -> modelToDto(x))
                 .collect(Collectors.toList());
@@ -62,6 +66,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto getCategory(Long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Category with id {} not found", id)));
+        log.info("Get category with id: %s", category.getId());
         return modelToDto(category);
     }
 
@@ -69,6 +74,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategory(Long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Category with id {} not found", id)));
+        log.info("Delete category with id: %s", category.getId());
         categoryRepository.deleteById(id);
     }
 }

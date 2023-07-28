@@ -43,7 +43,7 @@ public class RequestServiceImpl implements RequestService {
     public List<ParticipationRequestDto> getUserRequests(Long userId) {
         List<Request> requests = requestRepository.findAllByRequesterId(userId);
         if (requests == null) requests = new ArrayList<>();
-
+        log.info("Got requests of user with id: %s", userId);
         return requests.stream()
                 .map(x -> modelToDto(x))
                 .collect(Collectors.toList());
@@ -79,7 +79,7 @@ public class RequestServiceImpl implements RequestService {
 
         if (!event.getParticipantLimit().equals(0L)) {
             List<Request> confirmedRequest = event.getRequests().stream()
-                    .filter(r -> r.getStatus().equals(State.CONFIRMED))
+                    .filter(r -> r.getStatus().equals(Request.RequestState.CONFIRMED))
                     .collect(Collectors.toList());
 
             if(confirmedRequest.size() == event.getParticipantLimit()) {
@@ -91,15 +91,15 @@ public class RequestServiceImpl implements RequestService {
                 .created(LocalDateTime.now())
                 .requester(user)
                 .event(event)
-                .status(State.PENDING)
+                .status(Request.RequestState.PENDING)
                 .build();
 
         if (!event.getRequestModeration() || event.getParticipantLimit().equals(0L)) {
-            requestToSave.setStatus(State.CONFIRMED);
+            requestToSave.setStatus(Request.RequestState.CONFIRMED);
         }
 
         Request requestSaved = requestRepository.saveAndFlush(requestToSave);
-
+        log.info("Created request for event with id: %s of user with id: %s", eventId, userId);
         return modelToDto(requestSaved);
 
     }
@@ -112,11 +112,11 @@ public class RequestServiceImpl implements RequestService {
 
         Request request = requestRepository.findById(requestId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Request %s not found", requestId)));
-        request.setStatus(State.CANCELED);
+        request.setStatus(Request.RequestState.CANCELED);
 
 
         Request requestUPD = requestRepository.saveAndFlush(request);
-
+        log.info("Cancel request  with id: %s of user with id: %s", requestId, userId);
         return modelToDto(requestUPD);
     }
 
@@ -129,7 +129,7 @@ public class RequestServiceImpl implements RequestService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Event %s not found", eventId)));
 
         List<Request> requests = requestRepository.findAllByEventId(eventId);
-
+        log.info("Got requests for event with id: %s ", eventId);
         return requests.stream()
                 .map(x -> modelToDto(x))
                 .collect(Collectors.toList());
@@ -144,7 +144,7 @@ public class RequestServiceImpl implements RequestService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Event %s not found", eventId)));
 
         Long confirmedRequest = event.getRequests().stream()
-                .filter(r -> r.getStatus().equals(State.CONFIRMED))
+                .filter(r -> r.getStatus().equals(Request.RequestState.CONFIRMED))
                 .count();
 
         if (confirmedRequest == event.getParticipantLimit()) {
@@ -164,11 +164,11 @@ public class RequestServiceImpl implements RequestService {
         List<Request> rejectedRequests = new ArrayList<>();
 
             for(Request requestToConfirm : requests) {
-                if (requestToConfirm.getStatus().equals(State.PENDING)) {
+                if (requestToConfirm.getStatus().equals(Request.RequestState.PENDING)) {
                    requestToConfirm.setStatus(request.getStatus().equals(
-                           State.CONFIRMED) ? State.CONFIRMED : State.REJECTED
+                           Request.RequestState.CONFIRMED) ? Request.RequestState.CONFIRMED : Request.RequestState.REJECTED
                    );
-                if (requestToConfirm.getStatus().equals(State.CONFIRMED)) {
+                if (requestToConfirm.getStatus().equals(Request.RequestState.CONFIRMED)) {
                     confirmedRequests.add(requestToConfirm);
                 } else {
                     rejectedRequests.add(requestToConfirm);
@@ -179,8 +179,8 @@ public class RequestServiceImpl implements RequestService {
 
                 if (confirmedRequests.size() == event.getParticipantLimit()) {
                     for (Request leftRequest : requests) {
-                        if (leftRequest.getStatus().equals(State.PENDING)) {
-                        leftRequest.setStatus(State.REJECTED);
+                        if (leftRequest.getStatus().equals(Request.RequestState.PENDING)) {
+                        leftRequest.setStatus(Request.RequestState.REJECTED);
                         rejectedRequests.add(leftRequest);
                         }
                     }
@@ -195,6 +195,8 @@ public class RequestServiceImpl implements RequestService {
         List<ParticipationRequestDto> rejectedDto = rejectedRequests.stream()
                 .map(x -> modelToDto(x))
                 .collect(Collectors.toList());
+
+        log.info("Changed status for requests for event with id: %s ", eventId);
         return new ConfirmedAndRejectedRequests(confirmedDto, rejectedDto);
 
     }
@@ -204,7 +206,7 @@ public class RequestServiceImpl implements RequestService {
         List<Request> confirmed = requestRepository.saveAll(confirmedRequests);
 
         requestRepository.deleteAllById(rejectedRequests.stream().map(x -> x.getId()).collect(Collectors.toList()));
-        rejectedRequests.stream().forEach(r -> r.setStatus(State.REJECTED));
+        rejectedRequests.stream().forEach(r -> r.setStatus(Request.RequestState.REJECTED));
         List<Request> rejected = requestRepository.saveAll(rejectedRequests);
         return List.of(confirmed, rejected);
     }

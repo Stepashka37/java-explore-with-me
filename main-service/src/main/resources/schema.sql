@@ -24,9 +24,9 @@ create table compilations
 );
 
 create table categories (
-       id  bigserial not null,
-        name varchar(50),
-        primary key (id)
+       id     bigserial
+        primary key,
+        name varchar(50)
     );
 
 create table events (
