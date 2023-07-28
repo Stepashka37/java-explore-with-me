@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ru.dimax.main.mapper.user.UserMapper.*;
+import static ru.dimax.main.mapper.user.UserMapper.modelToDto;
+import static ru.dimax.main.mapper.user.UserMapper.requestDtoToModel;
 
 
 @Service

@@ -10,8 +10,8 @@ import ru.dimax.main.model.dtos.event.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static ru.dimax.main.mapper.category.CategoryMapper.*;
-import static ru.dimax.main.mapper.user.UserMapper.*;
+import static ru.dimax.main.mapper.category.CategoryMapper.modelToDto;
+import static ru.dimax.main.mapper.user.UserMapper.modelToShortDto;
 
 @UtilityClass
 public class EventMapper {

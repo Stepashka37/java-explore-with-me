@@ -12,7 +12,6 @@ import ru.dimax.main.exception.EntityValidationException;
 import ru.dimax.main.mapper.event.EventUpdateMapper;
 import ru.dimax.main.model.*;
 import ru.dimax.main.model.dtos.event.*;
-import ru.dimax.main.repository.CategoryRepository;
 import ru.dimax.main.repository.EventRepository;
 import ru.dimax.main.repository.UserRepository;
 import ru.dimax.stats.client.StatsClient;

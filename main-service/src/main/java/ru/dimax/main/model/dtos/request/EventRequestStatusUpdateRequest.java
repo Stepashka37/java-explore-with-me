@@ -3,7 +3,6 @@ package ru.dimax.main.model.dtos.request;
 import lombok.Builder;
 import lombok.Data;
 import ru.dimax.main.model.Request;
-import ru.dimax.main.model.State;
 
 import java.util.List;
 

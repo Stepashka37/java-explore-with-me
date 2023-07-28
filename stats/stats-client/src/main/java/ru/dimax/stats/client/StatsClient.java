@@ -11,7 +11,6 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.dimax.stats.dto.EndpointHit;
-import ru.dimax.stats.dto.ViewStats;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
