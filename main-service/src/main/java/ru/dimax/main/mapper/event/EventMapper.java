@@ -65,7 +65,7 @@ public class EventMapper {
                 .category(modelToDto(event.getCategory()))
                 .confirmedRequests(event.getRequests()
                         .stream()
-                        .filter(x -> x.getStatus().equals(State.CONFIRMED))
+                        .filter(x -> x.getStatus().equals(Request.RequestState.CONFIRMED))
                         .count())
                 .eventDate(event.getEventDate())
                 .id(event.getId())

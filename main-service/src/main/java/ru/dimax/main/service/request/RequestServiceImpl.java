@@ -147,7 +147,7 @@ public class RequestServiceImpl implements RequestService {
                 .filter(r -> r.getStatus().equals(Request.RequestState.CONFIRMED))
                 .count();
 
-        if (confirmedRequest == event.getParticipantLimit()) {
+        if (confirmedRequest.equals(event.getParticipantLimit())) {
             throw new ConflictException("Participant limit exceeded");
         }
 
