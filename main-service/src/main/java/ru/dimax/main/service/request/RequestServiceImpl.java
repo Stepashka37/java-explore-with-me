@@ -82,7 +82,7 @@ public class RequestServiceImpl implements RequestService {
                     .filter(r -> r.getStatus().equals(Request.RequestState.CONFIRMED))
                     .collect(Collectors.toList());
 
-            if(confirmedRequest.size() == event.getParticipantLimit()) {
+            if (confirmedRequest.size() == event.getParticipantLimit()) {
                 throw new RequestApplicationException("Participants limit is reached");
             }
         }
@@ -151,7 +151,7 @@ public class RequestServiceImpl implements RequestService {
             throw new ConflictException("Participant limit exceeded");
         }
 
-        if(event.getParticipantLimit() == 0 || event.getRequestModeration() == false) {
+        if (event.getParticipantLimit() == 0 || event.getRequestModeration() == false) {
             return new ConfirmedAndRejectedRequests();
         }
 
@@ -163,7 +163,7 @@ public class RequestServiceImpl implements RequestService {
         List<Request> confirmedRequests = new ArrayList<>();
         List<Request> rejectedRequests = new ArrayList<>();
 
-            for(Request requestToConfirm : requests) {
+            for (Request requestToConfirm : requests) {
                 if (requestToConfirm.getStatus().equals(Request.RequestState.PENDING)) {
                    requestToConfirm.setStatus(request.getStatus().equals(
                            Request.RequestState.CONFIRMED) ? Request.RequestState.CONFIRMED : Request.RequestState.REJECTED

@@ -1,4 +1,4 @@
-package ru.dimax.main.mapper.category;
+package ru.dimax.main.mapper.event.category;
 
 import lombok.experimental.UtilityClass;
 import ru.dimax.main.model.Category;

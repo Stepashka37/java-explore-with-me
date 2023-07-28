@@ -34,7 +34,7 @@ public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
-    private  StatsClient statsClient = new StatsClient();
+    private StatsClient statsClient = new StatsClient();
 
     public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
@@ -58,7 +58,7 @@ public class EventServiceImpl implements EventService {
     public List<EventShortDto> getEventsAddedByUser(Long userId, Integer from, Integer size) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("User %s not found", userId)));
-        int page = from/size;
+        int page = from / size;
         Pageable pageable = PageRequest.of(page, size);
         List<Event> events = new ArrayList<>();
         events = eventRepository.findAllByInitiatorId(userId, pageable);
@@ -100,7 +100,7 @@ public class EventServiceImpl implements EventService {
         || event.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
             EventUpdateMapper.INSTANCE.updateEventFromDtoByUser(request, event);
 
-            if(request.getStateAction() != null) {
+            if (request.getStateAction() != null) {
 
                 if (request.getStateAction().equals(StateAction.SEND_TO_REVIEW)) {
                     event.setState(State.PENDING);
@@ -153,7 +153,7 @@ public class EventServiceImpl implements EventService {
                                                            String sort, Integer from,
                                                            Integer size,
                                                            HttpServletRequest request) {
-        int page = from/size;
+        int page = from / size;
         Pageable pageable = PageRequest.of(page, size);
 
         Sort sort1  = Sort.valueOf(sort);
@@ -183,11 +183,11 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<EventFullDto> searchEvents(List<Long> userIds, List<String> states, List<Long> categoriesIds, LocalDateTime rangeStart, LocalDateTime rangeEnd, Integer from, Integer size) {
-       int page = from/size;
+       int page = from / size;
         Pageable pageable = PageRequest.of(page, size);
         List<State> validStates = null;
 
-        if(states != null) {
+        if (states != null) {
             validStates = states.stream()
                     .map(x -> State.valueOf(x))
                     .collect(Collectors.toList());

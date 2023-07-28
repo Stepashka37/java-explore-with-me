@@ -10,13 +10,13 @@ import ru.dimax.main.model.dtos.event.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import static ru.dimax.main.mapper.category.CategoryMapper.*;
+import static ru.dimax.main.mapper.event.category.CategoryMapper.*;
 import static ru.dimax.main.mapper.user.UserMapper.*;
 
 @UtilityClass
 public class EventMapper {
 
-    public Event newEventToEvent (NewEventDto newEventDto) {
+    public Event newEventToEvent(NewEventDto newEventDto) {
         return Event.builder()
                 .id(0L)
                 .category(new Category(newEventDto.getCategory()))
@@ -35,7 +35,7 @@ public class EventMapper {
                 .build();
     }
 
-    public EventFullDto eventToFullDto (Event event) {
+    public EventFullDto eventToFullDto(Event event) {
         return EventFullDto.builder()
                 .annotation(event.getAnnotation())
                 .category(modelToDto(event.getCategory()))
@@ -59,7 +59,7 @@ public class EventMapper {
                         .build();
     }
 
-    public EventShortDto eventToShortDto (Event event) {
+    public EventShortDto eventToShortDto(Event event) {
         return EventShortDto.builder()
                 .annotation(event.getAnnotation())
                 .category(modelToDto(event.getCategory()))

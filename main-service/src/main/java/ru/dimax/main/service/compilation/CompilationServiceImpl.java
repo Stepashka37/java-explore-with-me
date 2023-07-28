@@ -81,7 +81,7 @@ public class CompilationServiceImpl implements CompilationService {
     @Override
     public List<CompilationDto> getCompilations(Boolean pinned, Integer from, Integer size) {
 
-        int page = from/size;
+        int page = from / size;
         Pageable pageable = PageRequest.of(page, size);
 
         List<Compilation> compilation = compilationRepository.findAll(pageable).getContent();

@@ -79,7 +79,7 @@ public class PrivateController {
     }
 
     @PostMapping("/{userId}/requests")
-    public ResponseEntity<ParticipationRequestDto> createRequest (@PathVariable Long userId,
+    public ResponseEntity<ParticipationRequestDto> createRequest(@PathVariable Long userId,
                                                                   @RequestParam(required = true) String eventId) {
         Long eventIdLong;
         try {
@@ -93,7 +93,7 @@ public class PrivateController {
     }
 
     @PatchMapping("/{userId}/requests/{requestId}/cancel")
-    public ResponseEntity<ParticipationRequestDto> cancelRequest (@PathVariable Long userId,
+    public ResponseEntity<ParticipationRequestDto> cancelRequest(@PathVariable Long userId,
                                                                   @PathVariable Long requestId) {
 
         ParticipationRequestDto requestDto = requestService.cancelRequest(userId, requestId);

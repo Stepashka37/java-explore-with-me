@@ -24,17 +24,17 @@ import static ru.dimax.main.mapper.user.UserMapper.*;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    
+
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     public List<UserDto> getUsers(List<Long> ids, Integer from, Integer size) {
-        int page = from/size;
+        int page = from / size;
         Pageable pageable = PageRequest.of(page, size);
         List<User> users = new ArrayList<>();
-        if(ids.isEmpty()) {
+        if (ids.isEmpty()) {
             users = userRepository.findAll(pageable).getContent();
         } else {
             users = userRepository.findAllByIdIn(ids, pageable);

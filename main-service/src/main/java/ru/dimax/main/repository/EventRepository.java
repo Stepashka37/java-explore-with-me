@@ -12,9 +12,9 @@ import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-    Event findByIdAndInitiatorId(Long id, Long initiator_id);
+    Event findByIdAndInitiatorId(Long id, Long initiatorId);
 
-    List<Event> findAllByInitiatorId(Long initiator_id, Pageable pageable);
+    List<Event> findAllByInitiatorId(Long initiatorId, Pageable pageable);
 
     @Query("SELECT e FROM Event e " +
             "WHERE (:userIds IS NULL OR e.initiator.id IN :userIds) " +
