@@ -29,7 +29,7 @@ public class StatServiceImpl implements StatService {
         for (String s : uris) {
             if (s.startsWith("[") && s.endsWith("]")) {
                 uris.remove(s);
-                uris.add(s.substring(1, s.length()-1));
+                uris.add(s.substring(1, s.length() - 1));
             }
         }
 
