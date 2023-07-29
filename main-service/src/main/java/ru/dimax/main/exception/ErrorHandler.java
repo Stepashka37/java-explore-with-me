@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ru.dimax.main.Constants.Constants;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,7 +16,6 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 public class ErrorHandler {
 
-    private final String dateTimePattern = "yyyy-MM-dd HH:mm:ss";
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -24,7 +24,7 @@ public class ErrorHandler {
         return new ErrorResponse(HttpStatus.NOT_FOUND.name(),
                 "The required object was not found.",
                 exception.getMessage(),
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern(dateTimePattern)));
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern(Constants.DATE_TIME_PATTERN)));
     }
 
     @ExceptionHandler({ConstraintViolationException.class, AlreadyPublishedException.class, RequestApplicationException.class, ConflictException.class })
@@ -34,7 +34,7 @@ public class ErrorHandler {
         return new ErrorResponse(HttpStatus.CONFLICT.name(),
                 "Integrity constraint has been violated.",
                 exception.getMessage(),
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern(dateTimePattern)));
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern(Constants.DATE_TIME_PATTERN)));
     }
 
     @ExceptionHandler
@@ -47,7 +47,7 @@ public class ErrorHandler {
                         exception.getBindingResult().getFieldError().getField(),
                         exception.getBindingResult().getFieldError().getDefaultMessage(),
                         exception.getBindingResult().getFieldError().getRejectedValue()),
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern(dateTimePattern)));
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern(Constants.DATE_TIME_PATTERN)));
     }
 
     @ExceptionHandler
@@ -57,7 +57,7 @@ public class ErrorHandler {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.name(),
                 "Incorrectly made request.",
                 e.getMessage(),
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern(dateTimePattern)));
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern(Constants.DATE_TIME_PATTERN)));
     }
 
 
@@ -69,7 +69,7 @@ public class ErrorHandler {
         return new ErrorResponse(HttpStatus.FORBIDDEN.name(),
                 "For the requested operation the conditions are not met.",
                 exception.getMessage(),
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern(dateTimePattern)));
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern(Constants.DATE_TIME_PATTERN)));
     }
 
 

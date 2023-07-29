@@ -1,5 +1,6 @@
 package ru.dimax.main.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,20 +14,19 @@ import ru.dimax.main.model.dtos.request.ParticipationRequestDto;
 import ru.dimax.main.service.event.EventService;
 import ru.dimax.main.service.request.RequestService;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class PrivateController {
 
     private final EventService eventService;
     private final RequestService requestService;
 
-    public PrivateController(EventService eventService, RequestService requestService) {
-        this.eventService = eventService;
-        this.requestService = requestService;
-    }
 
     @PostMapping("/{userId}/events")
     public ResponseEntity<EventFullDto> createEvent(@PathVariable Long userId, @Valid @RequestBody NewEventDto newEventDto) {
@@ -80,15 +80,9 @@ public class PrivateController {
 
     @PostMapping("/{userId}/requests")
     public ResponseEntity<ParticipationRequestDto> createRequest(@PathVariable Long userId,
-                                                                  @RequestParam(required = true) String eventId) {
-        Long eventIdLong;
-        try {
-            eventIdLong = Long.parseLong(eventId);
-        } catch (NumberFormatException e) {
-            return  ResponseEntity.badRequest().build();
-        }
+                                                                 @Positive @RequestParam(required = true) Long eventId) {
 
-        ParticipationRequestDto requestDto = requestService.createRequest(userId, eventIdLong);
+        ParticipationRequestDto requestDto = requestService.createRequest(userId, eventId);
         return ResponseEntity.status(HttpStatus.CREATED).body(requestDto);
     }
 

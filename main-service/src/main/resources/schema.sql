@@ -44,7 +44,6 @@ create table events (
     moderation        boolean,
     state             varchar(255) default 'PENDING'::character varying,
     title             varchar(120),
-    views             integer default 0,
     category_id       bigint
         constraint fko6mla8j1p5bokt4dxrlmgwc28
             references categories,

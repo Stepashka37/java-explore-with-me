@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.dimax.main.Constants.Constants;
 import ru.dimax.main.model.Location;
 
 import javax.validation.constraints.NotBlank;
@@ -31,7 +32,7 @@ public class NewEventDto {
     @NotBlank
     private String description;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = Constants.DATE_TIME_PATTERN)
     @NotNull
     private LocalDateTime eventDate;
 

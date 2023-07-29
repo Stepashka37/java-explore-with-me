@@ -3,6 +3,7 @@ package ru.dimax.main.model.dtos.event;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
+import ru.dimax.main.Constants.Constants;
 import ru.dimax.main.model.dtos.category.CategoryDto;
 import ru.dimax.main.model.dtos.user.UserShortDto;
 
@@ -18,7 +19,7 @@ public class EventShortDto {
 
     public Long confirmedRequests;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = Constants.DATE_TIME_PATTERN)
     private LocalDateTime eventDate;
 
     private Long id;

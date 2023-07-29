@@ -3,6 +3,7 @@ package ru.dimax.main.model.dtos.event;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
+import ru.dimax.main.Constants.Constants;
 import ru.dimax.main.model.Location;
 import ru.dimax.main.model.State;
 import ru.dimax.main.model.dtos.category.CategoryDto;
@@ -24,7 +25,7 @@ public class EventFullDto {
 
     private String description;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = Constants.DATE_TIME_PATTERN)
     private LocalDateTime eventDate;
 
     private Long id;
