@@ -14,7 +14,6 @@ import ru.dimax.main.model.dtos.request.ParticipationRequestDto;
 import ru.dimax.main.service.event.EventService;
 import ru.dimax.main.service.request.RequestService;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.List;
