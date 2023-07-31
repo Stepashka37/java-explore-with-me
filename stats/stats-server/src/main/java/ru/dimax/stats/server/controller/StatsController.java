@@ -26,8 +26,6 @@ public class StatsController {
         this.statsService = statsService;
     }
 
-
-
     @GetMapping(value = "/stats")
     public ResponseEntity<List<ViewStats>> getStats(@RequestParam @NonNull String start,
                                                    @RequestParam @NonNull String end,
@@ -41,9 +39,13 @@ public class StatsController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+
+        if (startDT.isAfter(endDT)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         if (uris == null) uris = new ArrayList<>();
         List<ViewStats> result = statsService.getStats(startDT, endDT, uris, unique);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @PostMapping(value = "/hit")

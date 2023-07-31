@@ -7,7 +7,6 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
@@ -18,20 +17,29 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-@Service
 public class StatsClient {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private final String application;
+    private  String application;
 
-    private final String statsServiceUri;
+    private  String statsServiceUri;
 
-    private final ObjectMapper objectMapper;
+    private  ObjectMapper objectMapper;
 
-    private final RestTemplate  restTemplate;
+    private  RestTemplate  restTemplate;
+
+    public StatsClient() {
+        this.application = "ewm-main-service";
+        this.statsServiceUri = "http://stats-server:9090";
+        this.objectMapper = new ObjectMapper();
+        this.restTemplate = new RestTemplateBuilder()
+                .uriTemplateHandler(new DefaultUriBuilderFactory(statsServiceUri))
+                .requestFactory(HttpComponentsClientHttpRequestFactory::new)
+                .build();
+    }
 
     public StatsClient(@Value("ewm-main-service") String application,
-                       @Value("http://localhost:9090")String statsServiceUri,
+                       @Value("http://stats-server:9090") String statsServiceUri,
                        ObjectMapper objectMapper, RestTemplate restTemplate) {
         this.application = application;
         this.statsServiceUri = statsServiceUri;

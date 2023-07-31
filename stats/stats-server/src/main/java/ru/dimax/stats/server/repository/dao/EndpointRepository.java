@@ -31,11 +31,12 @@ public class EndpointRepository implements StatRepository {
     public List<ViewStats> getViewStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
         String sql = new String();
         List<ViewStats> stats = new ArrayList<>();
+
         if (unique) {
             sql = "SELECT app, uri, COUNT(DISTINCT ip) as count " +
                     "FROM endpoint_hits " +
                     "WHERE timestamp BETWEEN ? AND ? " +
-                    "AND uri = ANY(?) " +
+                    "AND uri = ANY(ARRAY[?]) " +
                     "GROUP BY app, uri " +
                     "ORDER BY count DESC ";
             Object[] params = new Object[]{start, end, uris.toArray(new String[0])};
@@ -63,7 +64,7 @@ public class EndpointRepository implements StatRepository {
     @Override
     public List<ViewStats> getAllViewStats(LocalDateTime start, LocalDateTime end, Boolean unique) {
         String sql = new String();
-        List<ViewStats> stats = new ArrayList<ViewStats>();
+        List<ViewStats> stats = new ArrayList<>();
         if (unique) {
             sql = "SELECT app, uri, COUNT(DISTINCT ip) as count " +
                     "FROM endpoint_hits " +
