@@ -12,11 +12,14 @@ import ru.dimax.main.model.dtos.compilation.NewCompilationDto;
 import ru.dimax.main.model.dtos.compilation.UpdateCompilationRequest;
 import ru.dimax.main.model.dtos.event.EventFullDto;
 import ru.dimax.main.model.dtos.event.UpdateEventAdminRequest;
+import ru.dimax.main.model.dtos.geolocation.FullGeoLocationDto;
+import ru.dimax.main.model.dtos.geolocation.NewGeoLocationDto;
 import ru.dimax.main.model.dtos.user.NewUserRequest;
 import ru.dimax.main.model.dtos.user.UserDto;
 import ru.dimax.main.service.category.CategoryService;
 import ru.dimax.main.service.compilation.CompilationService;
 import ru.dimax.main.service.event.EventService;
+import ru.dimax.main.service.geolocation.GeoLocationService;
 import ru.dimax.main.service.user.UserService;
 
 import javax.validation.Valid;
@@ -36,6 +39,7 @@ public class AdminController {
     private final CategoryService categoryService;
     private final EventService eventService;
     private final CompilationService compilationService;
+    private final GeoLocationService geoLocationService;
 
 
     @GetMapping("/users")
@@ -128,6 +132,26 @@ public class AdminController {
         CompilationDto compilationDto = compilationService.updateCompilation(compId, updateCompilationRequest);
         return ResponseEntity.status(HttpStatus.OK).body(compilationDto);
     }
+
+    @PostMapping("/locations")
+    public ResponseEntity<FullGeoLocationDto> addGeoLocation(@RequestBody @Valid NewGeoLocationDto newGeoLocationDto) {
+        FullGeoLocationDto fullGeoLocationDto = geoLocationService.addGeoLocation(newGeoLocationDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(fullGeoLocationDto);
+    }
+
+    @GetMapping("/locations")
+    public ResponseEntity<List<FullGeoLocationDto>> getAllLocations(@PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
+                                                                    @Positive @RequestParam(defaultValue = "10") Integer size) {
+        List<FullGeoLocationDto> locations = geoLocationService.getAllLocations(from, size);
+        return ResponseEntity.status(HttpStatus.OK).body(locations);
+    }
+
+    @GetMapping("/locations/{locationId}/search")
+    public ResponseEntity<List<EventFullDto>> searchEventsInLocation(@PathVariable Long locationId) {
+        List<EventFullDto> events = eventService.searchEventsInLocation(locationId);
+        return ResponseEntity.status(HttpStatus.OK).body(events);
+    }
+
 }
 
 

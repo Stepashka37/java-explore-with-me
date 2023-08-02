@@ -38,4 +38,6 @@ public interface EventService {
                                     Integer size);
 
     EventFullDto updateEventByAdmin(Long id, UpdateEventAdminRequest request);
+
+    List<EventFullDto> searchEventsInLocation(Long locationId);
 }

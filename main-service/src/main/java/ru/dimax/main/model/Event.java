@@ -63,12 +63,14 @@ public class Event {
     private Boolean requestModeration;
 
     @Enumerated(EnumType.STRING)
-    @ColumnDefault("'PENDING'")
     private State state;
 
     @Column(name = "title", length = 120)
     private String title;
 
+    @ManyToOne
+    @JoinColumn(name = "geolocation_id")
+    private GeoLocation geoLocation;
 
     private Integer views;
 
