@@ -18,7 +18,7 @@ import static ru.dimax.main.mapper.geolocation.GeoLocationMapper.*;
 
 @Service
 @Slf4j
-public class GeoLocationServiceImpl implements GeoLocationService{
+public class GeoLocationServiceImpl implements GeoLocationService {
 
     private final GeoLocationRepository geoLocationRepository;
     private final EventRepository eventRepository;
