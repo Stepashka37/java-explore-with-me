@@ -38,13 +38,13 @@ services:
       - POSTGRES_PASSWORD=iamroot
 
   main-db:
-          image: postgres:15.3-alpine
-          container_name: main-db
-          ports:
-            - "6542:5432"
-          environment:
-            - POSTGRES_DB=ewm_main_db
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=iamroot
+    image: postgres:15.3-alpine
+    container_name: main-db
+    ports:
+      - "6542:5432"
+    environment:
+      - POSTGRES_DB=ewm_main_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=iamroot
 
 
