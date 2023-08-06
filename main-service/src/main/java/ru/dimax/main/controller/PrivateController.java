@@ -11,6 +11,8 @@ import ru.dimax.main.model.dtos.event.UpdateEventUserRequest;
 import ru.dimax.main.model.dtos.request.ConfirmedAndRejectedRequests;
 import ru.dimax.main.model.dtos.request.EventRequestStatusUpdateRequest;
 import ru.dimax.main.model.dtos.request.ParticipationRequestDto;
+import ru.dimax.main.model.dtos.user.NewUserRequest;
+import ru.dimax.main.model.dtos.user.UserDto;
 import ru.dimax.main.service.event.EventService;
 import ru.dimax.main.service.request.RequestService;
 
@@ -25,6 +27,7 @@ public class PrivateController {
 
     private final EventService eventService;
     private final RequestService requestService;
+
 
 
     @PostMapping("/{userId}/events")

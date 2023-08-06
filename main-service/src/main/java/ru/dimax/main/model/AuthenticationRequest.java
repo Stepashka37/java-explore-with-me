@@ -1,25 +1,23 @@
-package ru.dimax.main.model.dtos.user;
+package ru.dimax.main.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
-@Builder
 @Data
-public class NewUserRequest {
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class AuthenticationRequest {
 
     @NotBlank
     @Email
-    @Size(min = 6, max = 254)
     private String email;
-
-    @NotBlank
-    @Size(min = 2, max = 250)
-    private String name;
 
     @NotBlank
     @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{4,16}$")

@@ -30,7 +30,7 @@ public class StatsClient {
 
     public StatsClient() {
         this.application = "ewm-main-service";
-        this.statsServiceUri = "http://stats-server:9090";
+        this.statsServiceUri = "http://localhost:9090";
         this.objectMapper = new ObjectMapper();
         this.restTemplate = new RestTemplateBuilder()
                 .uriTemplateHandler(new DefaultUriBuilderFactory(statsServiceUri))
@@ -39,7 +39,7 @@ public class StatsClient {
     }
 
     public StatsClient(@Value("ewm-main-service") String application,
-                       @Value("http://stats-server:9090") String statsServiceUri,
+                       @Value("http://localhost:9090") String statsServiceUri,
                        ObjectMapper objectMapper, RestTemplate restTemplate) {
         this.application = application;
         this.statsServiceUri = statsServiceUri;

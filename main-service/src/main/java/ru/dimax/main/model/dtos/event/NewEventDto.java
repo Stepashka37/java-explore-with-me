@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.dimax.main.Constants.Constants;
+import ru.dimax.main.constants.Constants;
 import ru.dimax.main.model.Location;
 
 import javax.validation.constraints.NotBlank;

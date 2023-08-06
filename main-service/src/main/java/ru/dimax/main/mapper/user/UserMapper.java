@@ -1,6 +1,8 @@
 package ru.dimax.main.mapper.user;
 
 import lombok.experimental.UtilityClass;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.dimax.main.model.Role;
 import ru.dimax.main.model.User;
 import ru.dimax.main.model.dtos.user.NewUserRequest;
 import ru.dimax.main.model.dtos.user.*;
@@ -9,18 +11,14 @@ import ru.dimax.main.model.dtos.user.*;
 @UtilityClass
 public class UserMapper {
 
-    public NewUserRequest modelToRequestDto(User user) {
-        return NewUserRequest.builder()
-                .email(user.getEmail())
-                .name(user.getName())
-                .build();
-    }
 
     public User requestDtoToModel(NewUserRequest newUserRequest) {
         return User.builder()
                 .id(0L)
                 .name(newUserRequest.getName())
                 .email(newUserRequest.getEmail())
+                .password(newUserRequest.getPassword())
+                .role(Role.USER)
                 .build();
     }
 

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.dimax.main.Constants.Constants;
+import ru.dimax.main.constants.Constants;
 import ru.dimax.main.model.dtos.category.CategoryDto;
 import ru.dimax.main.model.dtos.category.NewCategoryDto;
 import ru.dimax.main.model.dtos.compilation.CompilationDto;
@@ -14,7 +14,6 @@ import ru.dimax.main.model.dtos.event.EventFullDto;
 import ru.dimax.main.model.dtos.event.UpdateEventAdminRequest;
 import ru.dimax.main.model.dtos.geolocation.FullGeoLocationDto;
 import ru.dimax.main.model.dtos.geolocation.NewGeoLocationDto;
-import ru.dimax.main.model.dtos.user.NewUserRequest;
 import ru.dimax.main.model.dtos.user.UserDto;
 import ru.dimax.main.service.category.CategoryService;
 import ru.dimax.main.service.compilation.CompilationService;
@@ -52,11 +51,11 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
-    @PostMapping("/users")
+    /*@PostMapping("/users")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody NewUserRequest newUserRequest) {
         UserDto user = userService.createUser(newUserRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
-    }
+    }*/
 
     @DeleteMapping("/users/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {

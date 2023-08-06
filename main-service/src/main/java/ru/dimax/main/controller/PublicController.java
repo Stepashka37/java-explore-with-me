@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.dimax.main.Constants.Constants;
+import ru.dimax.main.constants.Constants;
 import ru.dimax.main.model.dtos.category.CategoryDto;
 import ru.dimax.main.model.dtos.compilation.CompilationDto;
 import ru.dimax.main.model.dtos.event.EventFullDto;

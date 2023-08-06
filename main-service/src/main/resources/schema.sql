@@ -1,6 +1,7 @@
 drop table if exists events cascade ;
 drop table if exists geo_location cascade ;
 drop table if exists users cascade ;
+drop table if exists token cascade ;
 drop table if exists events_compilation;
 drop table if exists compilations cascade;
 drop table if exists categories cascade;
@@ -55,7 +56,9 @@ create table users (
     email varchar(254)
         constraint uk_6dotkott2kjsp8vw4d0m25fb7
             unique,
-    name  varchar(250)
+    name  varchar(250),
+    password varchar(255),
+    role     varchar(255)
 );
 
 create table compilations
@@ -64,6 +67,19 @@ create table compilations
         primary key,
     pinned boolean,
     title  varchar(50)
+);
+
+create table token
+(
+    id         integer not null
+        primary key,
+    expired    boolean not null,
+    revoked    boolean not null,
+    token      varchar(255),
+    token_type varchar(255),
+    user_id    bigint
+        constraint fkj8rfw4x0wjjyibfqq566j4qng
+            references users
 );
 
 create table categories (

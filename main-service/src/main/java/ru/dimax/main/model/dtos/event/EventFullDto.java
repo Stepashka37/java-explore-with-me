@@ -3,7 +3,7 @@ package ru.dimax.main.model.dtos.event;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
-import ru.dimax.main.Constants.Constants;
+import ru.dimax.main.constants.Constants;
 import ru.dimax.main.model.Location;
 import ru.dimax.main.model.State;
 import ru.dimax.main.model.dtos.category.CategoryDto;
