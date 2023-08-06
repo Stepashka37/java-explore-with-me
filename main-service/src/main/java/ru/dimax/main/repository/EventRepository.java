@@ -62,4 +62,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                                                @Param("available") Boolean available,
                                                Pageable pageable);
 
+    @Query(value = "SELECT * FROM events WHERE distance(latitude, longitude, :lat, :lon) <= 2", nativeQuery = true)
+    List<Event> findAllInLocation(@Param("lat") Float lat, @Param("lon") Float lon);
+
 }

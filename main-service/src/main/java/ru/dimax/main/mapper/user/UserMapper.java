@@ -3,8 +3,8 @@ package ru.dimax.main.mapper.user;
 import lombok.experimental.UtilityClass;
 import ru.dimax.main.model.User;
 import ru.dimax.main.model.dtos.user.NewUserRequest;
-import ru.dimax.main.model.dtos.user.UserDto;
-import ru.dimax.main.model.dtos.user.UserShortDto;
+import ru.dimax.main.model.dtos.user.*;
+
 
 @UtilityClass
 public class UserMapper {

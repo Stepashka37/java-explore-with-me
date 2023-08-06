@@ -13,6 +13,7 @@ import ru.dimax.main.mapper.event.EventUpdateMapper;
 import ru.dimax.main.model.*;
 import ru.dimax.main.model.dtos.event.*;
 import ru.dimax.main.repository.EventRepository;
+import ru.dimax.main.repository.GeoLocationRepository;
 import ru.dimax.main.repository.UserRepository;
 import ru.dimax.stats.client.StatsClient;
 import ru.dimax.stats.dto.EndpointHit;
@@ -34,11 +35,13 @@ public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
+    private final GeoLocationRepository geoLocationRepository;
     private StatsClient statsClient = new StatsClient();
 
-    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository) {
+    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository, GeoLocationRepository geoLocationRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
+        this.geoLocationRepository = geoLocationRepository;
     }
 
     @Override
@@ -230,6 +233,17 @@ public class EventServiceImpl implements EventService {
         Event eventUPD = eventRepository.save(event);
         log.info("Updated event with id: %s by admin", eventId);
         return eventToFullDto(eventUPD);
+    }
+
+    @Override
+    public List<EventFullDto> searchEventsInLocation(Long locationId) {
+        GeoLocation geoLocation = geoLocationRepository.findById(locationId)
+                .orElseThrow(() -> new EntityNotFoundException("Location is not found"));
+
+        List<Event> eventsInLocation = eventRepository.findAllInLocation(geoLocation.getLat(), geoLocation.getLon());
+        return eventsInLocation.stream()
+                .map(x -> eventToFullDto(x))
+                .collect(Collectors.toList());
     }
 
 
